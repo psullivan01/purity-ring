@@ -1,0 +1,2 @@
+# purity-ring
+Sanitize usernames
