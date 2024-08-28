@@ -1,13 +1,14 @@
 # Purity Ring
 
-![The One Ring](assets/the-one-ring.jpg)
+<img src="assets/the-one-ring.jpg" alt="The One Ring" width="200"/>
+
 
 **Version**: 1.0.0  
 **Description**: Sanitize usernames by splitting concatenated strings, substituting numbers/special characters for letters, and checking for blacklisted terms.
 
 ## Overview
 
-Purity Ring was created to address the challenge of detecting profane or inappropriate usernames, which are often submitted as concatenated strings where numbers or special characters substitute for letters. Traditional methods often result in a high rate of false positives -- such as mistakenly rejecting the word "assassin" due to the presence of the blacklisted substring "ass".
+Purity Ring was created to address the challenge of detecting profane or inappropriate usernames, which are often submitted as concatenated strings where numbers or special characters are used instead of letters. Traditional methods often result in a high rate of false positives -- such as mistakenly rejecting the word "assassin" due to the presence of the blacklisted substring "ass".
 
 To solve this, Purity Ring:
 
@@ -18,13 +19,13 @@ To solve this, Purity Ring:
 ## Features
 
 ### 1. Word Splitting
-Purity Ring uses pre-processed word "cost" data to split concatenated strings into their most likely component words.
+Purity Ring uses pre-processed word cost data to split concatenated strings into their most likely component words.
 
 ### 2. Character Mapping
 After splitting a string, Purity Ring allows users to optionally map special characters and numbers to their corresponding letters (can lead to an increase in false positives).
 
 ### 3. Blacklist Management
-Purity Ring provides a flexible blacklist management system. While there isn't a definitive list of blacklisted terms out there, this app allows users to aggregate terms from various publicly available lists and to add their own terms.
+Purity Ring provides a flexible blacklist management system. While there isn't a definitive list of blacklisted terms out there, Purity Ring allows users to aggregate terms from various publicly available lists and to add their own terms.
 
 ## Usage
 
@@ -70,10 +71,15 @@ console.log(result);
 //   substitutedString: 'butthead lze'
 // }
 
-// Split a concatenated string into words (does not support character mapping)
-const words = purityRing.splitString('aconcatenatedstringtobesplitintoitscomponentwords');
+// Split a concatenated string into words with character mapping
+const words = purityRing.splitString('aconcatenatedstringtobesplitintoitsc0mponentword5', true);
 console.log(words);
 // ["a", "concatenated", "string", "to", "be", "split", "into", "its", "component", "words"]
+
+// Split a concatenated string into words without character mapping
+const words = purityRing.splitString('anotherexamplethistimewithoutcharactermapping1234', false);
+console.log(words);
+// ["another","example","this","time","without","character","mapping"]
 
 // Update the blacklist with new terms
 const updatedBlacklist = await purityRing.addBlacklist(['badword', 'anotherBadword']);
