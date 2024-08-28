@@ -134,3 +134,6 @@ data/*
 
 # username data
 src/data/usernames.json
+
+# DS Store
+.DS_Store
