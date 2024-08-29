@@ -1,5 +1,5 @@
-const fs = require('fs').promises;
-const helpers = require('../../helpers/helpers');
+import { promises as fs } from 'fs';
+import helpers from '../../helpers/helpers.js';
 
 jest.mock('fs', () => ({
   promises: {
@@ -40,7 +40,7 @@ describe('helpers', () => {
 
   describe('writeJsonFile', () => {
     it('should write a JSON object to a file', async () => {
-      const mockPath = './test.json';
+      const mockPath = './test';
       const mockJson = { key: 'value' };
 
       jest.spyOn(fs, 'writeFile').mockResolvedValue();

@@ -1,4 +1,9 @@
-const leet = require('../data/leet.json');
+import fs from 'fs';
+import path from 'path';
+
+const leet = JSON.parse(
+  fs.readFileSync(path.resolve('src/data/leet.json'), 'utf8')
+);
 
 const sanitization = {
   /**
@@ -53,4 +58,4 @@ const sanitization = {
   },
 };
 
-module.exports = sanitization;
+export default sanitization;

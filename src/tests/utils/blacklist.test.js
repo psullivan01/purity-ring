@@ -1,21 +1,38 @@
-const path = require('path');
-const blacklistUtils = require('../../utils/blacklist');
-const { sanitize } = require('../../utils/sanitization');
-const { writeJsonFile } = require('../../helpers/helpers');
+import path from 'path';
+import blacklistUtils from '../../utils/blacklist.js';
+import helpers from '../../helpers/helpers.js';
+import sanitization from '../../utils/sanitization.js';
+import { promises as mockPromises } from 'fs';
 
-jest.mock('../../utils/sanitization');
-jest.mock('../../helpers/helpers');
+const { sanitize } = sanitization;
+const { writeJsonFile } = helpers;
+
+jest.mock('../../utils/sanitization', () => ({
+  sanitize: jest.fn(),
+}));
+jest.mock('../../helpers/helpers', () => ({
+  writeJsonFile: jest.fn(),
+}));
+
+// Mock fs.promises.readFile and writeFile
+jest.mock('fs', () => ({
+  promises: {
+    readFile: jest.fn(),
+  },
+}));
+
+jest.mock('path', () => ({
+  resolve: jest.fn(() => 'src/data/blacklist.json'),
+  join: jest.requireActual('path').join,
+}));
 
 const blacklistArr = ['badwordc', 'badwordd'];
-
-jest.mock('../../data/blacklist.json', () => blacklistArr);
+const stringifiedArr = JSON.stringify(blacklistArr);
 
 describe('blacklistUtils', () => {
-  let blacklist;
-
   beforeEach(() => {
-    blacklist = [];
     jest.clearAllMocks();
+    mockPromises.readFile.mockReturnValue(stringifiedArr);
   });
 
   describe('addBlacklist', () => {
@@ -53,9 +70,22 @@ describe('blacklistUtils', () => {
   });
 
   describe('getBlacklist', () => {
-    it('should return the current blacklist', () => {
-      const blacklist = blacklistUtils.getBlacklist();
+    it('should return the current blacklist', async () => {
+      const blacklist = await blacklistUtils.getBlacklist();
       expect(blacklist).toEqual(blacklistArr);
+    });
+
+    it('should throw an error if the file cannot be read', async () => {
+      jest.spyOn(console, 'error').mockImplementation(() => {});
+      require('fs').promises.readFile.mockRejectedValue(
+        new Error('File not found')
+      );
+
+      await expect(blacklistUtils.getBlacklist()).rejects.toThrow(
+        'File not found'
+      );
+
+      console.error.mockRestore();
     });
   });
 
@@ -65,7 +95,7 @@ describe('blacklistUtils', () => {
 
       expect(removedTerms).toEqual(['badwordc']);
       expect(writeJsonFile).toHaveBeenCalledWith(
-        path.join(__dirname, '../../data/blacklist.json'),
+        path.resolve(blacklistUtils.blacklistPath),
         ['badwordd']
       );
     });
@@ -76,7 +106,7 @@ describe('blacklistUtils', () => {
 
       expect(removedTerms).toEqual([]);
       expect(writeJsonFile).toHaveBeenCalledWith(
-        path.join(__dirname, '../../data/blacklist.json'),
+        path.resolve(blacklistUtils.blacklistPath),
         blacklistArr
       );
     });
@@ -86,7 +116,7 @@ describe('blacklistUtils', () => {
 
       expect(removedTerms).toEqual(['badwordc', 'badwordd']);
       expect(writeJsonFile).toHaveBeenCalledWith(
-        path.join(__dirname, '../../data/blacklist.json'),
+        path.resolve(blacklistUtils.blacklistPath),
         []
       );
     });

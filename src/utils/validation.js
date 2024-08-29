@@ -1,5 +1,12 @@
-const { splitString } = require('./string');
-const blacklist = require('../data/blacklist.json');
+import fs from 'fs';
+import path from 'path';
+import stringUtils from './string.js';
+
+const { splitString } = stringUtils;
+
+const blacklist = JSON.parse(
+  fs.readFileSync(path.resolve('src/data/blacklist.json'), 'utf8')
+);
 
 const validation = {
   /**
@@ -50,4 +57,4 @@ const validation = {
   },
 };
 
-module.exports = validation;
+export default validation;

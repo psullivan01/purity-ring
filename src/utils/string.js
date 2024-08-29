@@ -1,5 +1,10 @@
-const { maxWordLength, words } = require('../data/words.json');
-const sanitization = require('./sanitization');
+import fs from 'fs';
+import path from 'path';
+import sanitization from './sanitization.js';
+
+const { maxWordLength, words } = JSON.parse(
+  fs.readFileSync(path.resolve('src/data/words.json'), 'utf8')
+);
 
 const stringUtils = {
   /**
@@ -119,4 +124,4 @@ const stringUtils = {
   },
 };
 
-module.exports = stringUtils;
+export default stringUtils;

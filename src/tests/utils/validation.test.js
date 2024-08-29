@@ -1,8 +1,14 @@
-const validation = require('../../utils/validation');
-const { splitString } = require('../../utils/string');
+import validation from '../../utils/validation.js';
+import stringUtils from '../../utils/string.js';
 
-jest.mock('../../utils/string');
-jest.mock('../../data/blacklist.json', () => ['test']);
+const { splitString } = stringUtils;
+
+jest.mock('../../utils/string', () => ({
+  splitString: jest.fn(),
+}));
+jest.mock('fs', () => ({
+  readFileSync: jest.fn().mockReturnValue(JSON.stringify(['test'])),
+}));
 
 describe('validation', () => {
   beforeEach(() => {

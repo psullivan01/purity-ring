@@ -1,5 +1,7 @@
-const stringUtils = require('../../utils/string.js');
-const { sanitize: mockSanitize } = require('../../utils/sanitization.js');
+import stringUtils from '../../utils/string.js';
+import sanitization from '../../utils/sanitization.js';
+
+const { sanitize: mockSanitize } = sanitization;
 
 jest.mock('../../data/words.json', () => {
   const mock = {

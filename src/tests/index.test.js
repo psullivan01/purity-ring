@@ -1,7 +1,11 @@
-const { validate } = require('../utils/validation');
-const { splitString } = require('../utils/string');
-const { addBlacklist } = require('../utils/blacklist');
-const purityRing = require('../index');
+import validation from '../utils/validation.js';
+import stringUtils from '../utils/string.js';
+import blacklistUtils from '../utils/blacklist.js';
+import purityRing from '../index.js';
+
+const { validate } = validation;
+const { splitString } = stringUtils;
+const { addBlacklist } = blacklistUtils;
 
 jest.mock('../utils/validation', () => ({
   validate: jest.fn(),

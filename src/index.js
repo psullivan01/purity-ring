@@ -1,10 +1,10 @@
-const { validate } = require('./utils/validation');
-const { splitString } = require('./utils/string');
-const {
-  addBlacklist,
-  removeBlacklist,
-  getBlacklist,
-} = require('./utils/blacklist');
+import validation from './utils/validation.js';
+import stringUtils from './utils/string.js';
+import blacklistUtils from './utils/blacklist.js';
+
+const { validate } = validation;
+const { splitString } = stringUtils;
+const { addBlacklist, removeBlacklist, getBlacklist } = blacklistUtils;
 
 const purityRing = {
   validate,
@@ -14,4 +14,4 @@ const purityRing = {
   getBlacklist,
 };
 
-module.exports = purityRing;
+export default purityRing;

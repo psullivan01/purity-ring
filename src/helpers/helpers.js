@@ -1,4 +1,4 @@
-const fs = require('fs').promises;
+import { promises as fs } from 'fs';
 
 const helpers = {
   /**
@@ -37,4 +37,4 @@ const helpers = {
   },
 };
 
-module.exports = helpers;
+export default helpers;

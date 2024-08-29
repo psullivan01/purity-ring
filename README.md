@@ -1,6 +1,6 @@
 # Purity Ring
 
-<img src="assets/the-one-ring.jpg" alt="The One Ring" width="200"/>
+<img src="assets/the-one-ring.jpeg" alt="The One Ring" width="200"/>
 
 
 **Version**: 1.0.0  
@@ -18,11 +18,27 @@ To solve this, Purity Ring:
 
 ## Features
 
-### 1. Word Splitting
+### 1. String Splitting
 Purity Ring uses pre-processed word cost data to split concatenated strings into their most likely component words.
 
 ### 2. Character Mapping
-After splitting a string, Purity Ring allows users to optionally map special characters and numbers to their corresponding letters (can lead to an increase in false positives).
+
+After splitting a string, Purity Ring allows users to optionally map special characters and numbers to their corresponding letters. In the interest of performance, special characters that could be mapped to multiple letters have been consolidated to their most likely use case. This decision enforces a **1:M** (one-to-many) relationship for letters to characters, as opposed to a **M:M** (many-to-many) relationship.
+
+#### Why 1:M Mapping?
+
+If a M:M relationship were allowed, we would need to generate all possible permutations of a string given the different substitution options. This isn't a big deal if we're just dealing with one variation (e.g., `h1` could be `hi` or `hl`). However, things can get out of hand quickly when multiple instances of a character are involved.
+
+For example, consider the word `i11icit`, where `1` could be substituted as either `i` or `l`. Here’s what the permutations would look like:
+
+1. **Original String**: `i11icit`
+2. **Possible Variations**:  
+   - `iiicit`
+   - `illicit`
+   - `liicit`
+   - `lllicit`
+
+With just two `1`s in the string, we already have 2 possible substitutions for each, leading to \(2^2 = 4\) total permutations. As you can see, the number of permutations increases exponentially as the number of characters and substitution options increases. By consolidating to a 1:M relationship, we avoid the computational complexity and performance overhead that would come with generating and processing all possible permutations.
 
 ### 3. Blacklist Management
 Purity Ring provides a flexible blacklist management system. While there isn't a definitive list of blacklisted terms out there, Purity Ring allows users to aggregate terms from various publicly available lists and to add their own terms.
@@ -92,7 +108,7 @@ console.log(removedBlacklist);
 // ['badword']
 
 // Get the current blacklist
-const currentBlacklist = purityRing.getBlacklist();
+const currentBlacklist = await purityRing.getBlacklist();
 console.log(currentBlacklist);
 // ['anotherBadword']
 ```

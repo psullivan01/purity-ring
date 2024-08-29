@@ -1,4 +1,4 @@
-const sanitization = require('../../utils/sanitization');
+import sanitization from '../../utils/sanitization.js';
 
 jest.mock('../../data/leet.json', () => ({
   e: '3',
