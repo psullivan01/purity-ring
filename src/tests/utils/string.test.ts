@@ -222,9 +222,9 @@ describe('stringUtils', () => {
     });
   });
 
-  describe('recursiveSplit', () => {
-    it('should recursively split a string and accumulate the results', () => {
-      const result = stringUtils.recursiveSplit(
+  describe('splitByCost', () => {
+    it('should split a string and accumulate the results', () => {
+      const result = stringUtils.splitByCost(
         testStringLength,
         testString,
         testStringCosts,
@@ -239,7 +239,7 @@ describe('stringUtils', () => {
       const acc: string[] = [];
 
       expect(() => {
-        stringUtils.recursiveSplit(testStringLength, testString, costs, acc);
+        stringUtils.splitByCost(testStringLength, testString, costs, acc);
       }).toThrow('Cost Mismatch');
     });
   });

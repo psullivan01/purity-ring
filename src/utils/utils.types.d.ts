@@ -81,7 +81,7 @@ export type BestMatchFunction = (
   costs: number[]
 ) => { matchCost: number; matchLength: number };
 
-export type RecursiveSplitFunction = (
+export type SplitByCostFunction = (
   x: number,
   string: string,
   costs: number[],
@@ -127,7 +127,7 @@ export interface StringUtils {
   fetchAndProcessChunks: FetchAndProcessChunksFunction;
   bestMatch: BestMatchFunction;
   getCosts: GetCostsFunction;
-  recursiveSplit: RecursiveSplitFunction;
+  splitByCost: SplitByCostFunction;
   splitString: SplitStringFunction;
 }
 

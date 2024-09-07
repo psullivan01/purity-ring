@@ -34,7 +34,7 @@ const stringUtils: StringUtils = {
    * The maximum cost value used as a fallback when a substring is not found in the words dictionary.
    * This ensures that unmatched substrings are penalized in cost-based calculations.
    */
-  maxCost: 9e999,
+  maxCost: Infinity,
 
   /**
    * The chunk filenames.
@@ -225,7 +225,7 @@ const stringUtils: StringUtils = {
 
   /**
    * Finds the best match for a substring within a given string based on cost.
-   * This function identifies the optimal substring match by minimizing the total cost,
+   * Identifies the optimal substring match by minimizing the total cost,
    * where cost is determined by the word frequency in the `words` dictionary.
    */
   bestMatch: (index, string, costs) => {
@@ -265,35 +265,32 @@ const stringUtils: StringUtils = {
     ),
 
   /**
-   * Recursively splits a string into substrings based on costs, storing the results in an accumulator.
-   * This function is used internally to perform the actual splitting of the string by evaluating
-   * the cost of each potential split and choosing the most optimal one.
+   * Splits a string into substrings based on cost, storing the results in an accumulator.
+   * Evaluates the cost of each potential split and chooses the optimal one.
    */
-  recursiveSplit: (x, string, costs, acc) => {
-    if (x <= 0) {
-      const result = acc.reverse();
+  splitByCost: (x, string, costs, acc) => {
+    while (x > 0) {
+      const { matchCost, matchLength } = stringUtils.bestMatch(
+        x,
+        string,
+        costs
+      );
 
-      return result;
+      if (matchCost !== costs[x]) {
+        throw new Error('Cost Mismatch');
+      }
+
+      const newLength = x - matchLength;
+      acc.push(string.slice(newLength, x));
+      x = newLength;
     }
 
-    const { matchCost, matchLength } = stringUtils.bestMatch(x, string, costs);
-
-    if (matchCost !== costs[x]) {
-      throw new Error('Cost Mismatch');
-    }
-
-    const newLength = x - matchLength;
-
-    acc.push(string.slice(newLength, x));
-
-    const next = stringUtils.recursiveSplit(newLength, string, costs, acc);
-
-    return next;
+    return acc.reverse();
   },
 
   /**
    * Splits a string into its component words based on computed costs.
-   * This function leverages the `getCosts` and `recursiveSplit` methods to
+   * Leverages the `getCosts` and `recursiveSplit` methods to
    * break down a concatenated string into its most likely word components,
    * prioritizing splits that minimize the total word cost.
    */
@@ -304,7 +301,7 @@ const stringUtils: StringUtils = {
 
     const costs = stringUtils.getCosts(sanitizedString);
 
-    const result = stringUtils.recursiveSplit(
+    const result = stringUtils.splitByCost(
       sanitizedString.length,
       sanitizedString,
       costs,

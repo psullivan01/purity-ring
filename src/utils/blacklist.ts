@@ -29,7 +29,7 @@ const blacklistUtils: BlacklistUtils = {
 
   /**
    * Asynchronously updates the blacklist by adding new sanitized terms to it.
-   * The function accepts an object of terms categorized into common, commonVariant, and special.
+   * Accepts an object of terms categorized into common, commonVariant, and special.
    * Sanitized terms are added to the respective category in the blacklist, and the updated
    * blacklist is saved to a JSON file.
    */
@@ -59,7 +59,7 @@ const blacklistUtils: BlacklistUtils = {
 
   /**
    * Asynchronously removes the specified term(s) from the blacklist.
-   * The function accepts either an array of terms or a single string term,
+   * Accepts either an array of terms or a single string term,
    * removes the specified term(s) from the blacklist, and updates the blacklist JSON file.
    */
   removeBlacklist: async (update) => {

@@ -40,7 +40,7 @@ const sanitization: Sanitization = {
 
   /**
    * Processes a string to replace leet characters with their alphabetic equivalents.
-   * The function iterates over the `leet` dictionary and replaces occurrences of leet
+   * Iterates over the `leet` dictionary and replaces occurrences of leet
    * characters in the input string. Special characters are then removed from the resulting string.
    */
   processString: (inputStr) => {
@@ -56,7 +56,7 @@ const sanitization: Sanitization = {
 
   /**
    * Sanitizes a string by converting it to lowercase and optionally replacing leet characters
-   * with their alphabetic equivalents. The function returns a single sanitized string.
+   * with their alphabetic equivalents. Returns a single sanitized string.
    * If `characterMapping` is set to `false`, the function will only remove special characters
    * from the string and will not perform leet character replacement.
    */

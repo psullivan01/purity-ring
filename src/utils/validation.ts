@@ -52,7 +52,7 @@ const validation: Validation = {
    * Evaluates a list of terms and categorizes them into different blacklist types.
    * Each term is validated using an asynchronous validation function, then sanitized
    * and categorized based on whether it's blacklisted, has been split, or is a duplicate.
-   * The function returns an object where the keys represent the blacklist categories, and
+   * Returns an object where the keys represent the blacklist categories, and
    * the values are arrays of sanitized terms belonging to each category.
    */
   evaluateBlacklist: async (evalArr) => {
