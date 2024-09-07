@@ -25,7 +25,7 @@ const stringUtils: StringUtils = {
 
   /**
    * The number of words in the word frequency data. Because the data is chunked and not necessarily
-   * included in the words object, this needs to remain a constant do calculate the offset index
+   * included in the words object, this needs to remain a constant to calculate the offset index
    * for the special blacklist.
    */
   dictionaryLength: 200000,
@@ -37,7 +37,7 @@ const stringUtils: StringUtils = {
   maxCost: 9e999,
 
   /**
-   * The chunk filenames available.
+   * The chunk filenames.
    */
   chunkManifest: [
     'a-ba',
@@ -84,9 +84,10 @@ const stringUtils: StringUtils = {
    */
   chunkBinarySearch: (str) => {
     const { chunkManifest } = stringUtils;
+    const lastIndex = chunkManifest.length - 1;
 
     let left = 0;
-    let right = chunkManifest.length - 1;
+    let right = lastIndex;
 
     while (left <= right) {
       const mid = Math.floor((left + right) / 2);
@@ -94,8 +95,16 @@ const stringUtils: StringUtils = {
       const [start, end] = chunkName.split('-');
       const firstTwo = str.slice(0, 2);
 
-      if (firstTwo >= start && firstTwo <= end) {
-        return chunkName;
+      if (firstTwo > start && firstTwo < end) {
+        return [chunkName];
+      } else if (firstTwo === start) {
+        const isBeginning = mid === 0;
+        const boundaryChunk = chunkManifest[mid - 1];
+        return isBeginning ? [chunkName] : [boundaryChunk, chunkName];
+      } else if (firstTwo === end) {
+        const isEnd = mid === lastIndex;
+        const boundaryChunk = chunkManifest[mid + 1];
+        return isEnd ? [chunkName] : [chunkName, boundaryChunk];
       } else if (firstTwo < start) {
         right = mid - 1;
       } else {
@@ -193,8 +202,12 @@ const stringUtils: StringUtils = {
 
     const chunks = Array.from(
       permutationsArr.reduce((acc, permutation) => {
-        const chunk = stringUtils.chunkBinarySearch(permutation);
-        acc.add(chunk);
+        const chunkArr = stringUtils.chunkBinarySearch(permutation);
+
+        if (chunkArr) {
+          chunkArr.forEach((chunk) => acc.add(chunk));
+        }
+
         return acc;
       }, new Set())
     );

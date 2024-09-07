@@ -33,8 +33,7 @@ const sanitization: Sanitization = {
   },
 
   /**
-   * Removes special characters from a string, leaving only alphabetic characters,
-   * apostrophes, and spaces.
+   * Removes special characters from a string, leaving only alphabetic characters.
    */
   removeSpecialCharacters: (input) =>
     input.replace(new RegExp('[^a-zA-Z]', 'g'), ''),

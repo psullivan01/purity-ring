@@ -99,7 +99,7 @@ export type GetConsecutivePermutationsFunction = (
   inputString: string
 ) => string[];
 
-export type ChunkBinarySearchFunction = (str: string) => string | null;
+export type ChunkBinarySearchFunction = (str: string) => string[] | null;
 
 export type ProcessChunkStreamFunction = (
   filePath: string,

@@ -107,13 +107,49 @@ describe('stringUtils', () => {
   });
 
   describe('chunkBinarySearch', () => {
-    it('should find the correct chunk for a given string', () => {
+    it('should find the correct chunk array for a given string', () => {
       const inputString = 'test';
-      const expectedChunk = 'sw-ur';
+      const expectedChunk = ['sw-ur'];
 
       const result = stringUtils.chunkBinarySearch(inputString);
 
-      expect(result).toBe(expectedChunk);
+      expect(result).toEqual(expectedChunk);
+    });
+
+    it('should find the correct chunk array for a start boundary word', () => {
+      const inputString = 'cr';
+      const expectedChunk = ['ca-cr', 'cr-el'];
+
+      const result = stringUtils.chunkBinarySearch(inputString);
+
+      expect(result).toEqual(expectedChunk);
+    });
+
+    it('should find the correct chunk array for an end boundary word', () => {
+      const inputString = 'pa';
+      const expectedChunk = ['my-pa', 'pa-re'];
+
+      const result = stringUtils.chunkBinarySearch(inputString);
+
+      expect(result).toEqual(expectedChunk);
+    });
+
+    it('should find the correct chunk array for a start boundary word at the beginning', () => {
+      const inputString = 'a';
+      const expectedChunk = ['a-ba'];
+
+      const result = stringUtils.chunkBinarySearch(inputString);
+
+      expect(result).toEqual(expectedChunk);
+    });
+
+    it('should find the correct chunk array for an end boundary word at the end', () => {
+      const inputString = 'zz';
+      const expectedChunk = ['ur-zz'];
+
+      const result = stringUtils.chunkBinarySearch(inputString);
+
+      expect(result).toEqual(expectedChunk);
     });
 
     it('should return null if no matching chunk is found', () => {
