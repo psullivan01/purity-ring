@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2020",                                  /* Same as the ESM config */
+    "lib": ["ES2020"],                                   /* Same as the ESM config */
+
+    /* Modules */
+    "module": "ES2020",                                /* Set to CommonJS for CJS build */
+    "rootDir": "./src",                                  /* Specify the root folder within your source files */
+    "moduleResolution": "node",                          /* Specify how TypeScript looks up a file from a given module specifier */
+    "types": ["jest", "node"],                           /* Specify type package names to be included without being referenced in a source file */
+    "resolveJsonModule": true,                           /* Enable importing .json files */
+
+    /* Emit */
+    "declaration": true,                                 /* Generate .d.ts files from TypeScript and JavaScript files */
+    "declarationMap": true,                              /* Create sourcemaps for d.ts files */
+    "sourceMap": true,                                   /* Create source map files for emitted JavaScript files */
+    "outDir": "./dist/cjs",                              /* Specify an output folder for CommonJS files */
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*", "*.ts", "*.js"]
+    },
+
+    /* Interop Constraints */
+    "isolatedModules": true,                             /* Ensure that each file can be safely transpiled without relying on other imports */
+    "allowSyntheticDefaultImports": true,                /* Allow 'import x from y' when a module doesn't have a default export */
+    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules */
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports */
+
+    /* Type Checking */
+    "strict": true,                                      /* Enable all strict type-checking options */
+    "noImplicitAny": true,                               /* Enable error reporting for expressions and declarations with an implied 'any' type */
+    "noUnusedLocals": true,                              /* Enable error reporting when local variables aren't read */
+    "noUnusedParameters": true,                          /* Raise an error when a function parameter isn't read */
+    "noImplicitReturns": true,                           /* Enable error reporting for codepaths that do not explicitly return in a function */
+    "noFallthroughCasesInSwitch": true,                  /* Enable error reporting for fallthrough cases in switch statements */
+    "skipLibCheck": true                                 /* Skip type checking all .d.ts files */
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "data"
+  ]
+}
