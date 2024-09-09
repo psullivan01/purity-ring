@@ -19,7 +19,7 @@
 
 ## Overview
 
-Purity Ring was created to address the challenge of detecting profane or inappropriate usernames, which are often submitted as concatenated strings where numbers or special characters are used instead of letters. Traditional methods often result in a high rate of false positives -- such as mistakenly rejecting the word "passage" due to the presence of the blacklisted substring "ass".
+Purity Ring was created to address the challenge of detecting profane or inappropriate usernames, which are often submitted as concatenated strings where numbers or special characters are used instead of letters. Traditional methods often result in a high rate of false positives - such as mistakenly rejecting the word "passage" due to the presence of the blacklisted substring "ass".
 
 To solve this, Purity Ring:
 
@@ -37,13 +37,11 @@ Purity Ring uses word frequency data to split concatenated strings into their mo
 After splitting a string, Purity Ring allows users to optionally map special characters and numbers to their corresponding letters. In the interest of performance, special characters that could be mapped to multiple letters have been consolidated to their most likely use case. This enforces a **1:M** relationship for letters to characters, as opposed to a **M:M** relationship (more details [here](#a-character-mapping)).
 
 ### 3. Blacklist Management
-Purity Ring provides a flexible blacklist management system. While there isn't a definitive list of blacklisted terms out there, Purity Ring allows users to aggregate terms from various publicly available lists and to add their own terms.
-
-Due to the nature of Purity Ring's string splitting method — determining the best string split based on word frequency data — and the uniqueness of some blacklisted terms, not all blacklist entries are treated the same (more details [here](#b-blacklist-management)).
+Purity Ring provides a flexible blacklist management system. While there isn't a definitive list of blacklisted terms out there, Purity Ring allows users to aggregate terms from various publicly available lists and to add their own terms. Due to the nature of Purity Ring's string splitting method — determining the best string split based on word frequency data — and the uniqueness of some blacklisted terms, not all blacklist entries are treated the same, but split into 3 distinct categories: common, common variant, and special (more details [here](#b-blacklist-management)).
 
 ## Accuracy
 
-Traditionally, blacklisted words are detected in usernames by searching for their existence anywhere in the string. This approach is very effective at identifying true positives, but results in a high rate of false positives. To compare Purity Ring against the traditional approach 2 separate tests were run 1000 times each for both methods:
+In typical approaches, blacklisted words are detected in usernames by searching for their existence anywhere in the string. This approach is very effective at identifying true positives, but results in a high rate of false positives. To compare Purity Ring against the traditional approach 2 separate tests were run 1000 times each for both methods:
 
 1. **False Positives and True Negatives** - Generate a string with 3 random non-blacklisted words from the word frequency data.
 
@@ -114,14 +112,14 @@ console.log(result);
 // }
 
 // Split a concatenated string into words with character mapping
-const words = await splitString('aconcatenatedstringtobesplitintoitsc0mponentword5', true);
+const words = await splitString('aconcatenatedstringtosplitintoitsc0mponentword5', true);
 console.log(words);
-// ["a", "concatenated", "string", "to", "be", "split", "into", "its", "component", "words"]
+// ['a', 'concatenated', 'string', 'to', 'split', 'into', 'its', 'component', 'words']
 
 // Split a concatenated string into words without character mapping
 const words = await splitString('anotherexamplethistimewithoutcharactermapping1234', false);
 console.log(words);
-// ["another","example","this","time","without","character","mapping"]
+// ['another', 'example', 'this', 'time', 'without', 'character', 'mapping']
 
 // Evaluate a list of blacklist terms to find their respective categories
 const categories = await evaluateBlacklist(['butt', 'hello', 'thisisatest', 'butttest']);
