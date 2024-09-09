@@ -140,7 +140,7 @@ const updatedBlacklist = await addBlacklist({
   commonVariant: [ 'butttest' ]
 });
 console.log(updatedBlacklist);
-// [ 'butt', 'hello', 'thisisatest' ]
+// [ 'butttest', 'hello', 'thisisatest' ]
 
 // Remove terms from the blacklist
 const removedWords = await removeBlacklist(['hello', 'thisisatest']);
