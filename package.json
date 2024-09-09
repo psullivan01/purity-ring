@@ -36,7 +36,11 @@
     "validation",
     "regex"
   ],
-  "author": "psullivan01",
+  "author": {
+    "name": "Patrick Sullivan",
+    "email": "prsullivan5@gmail.com",
+    "url": "https://github.com/psullivan01"
+  },
   "repository": "https://github.com/psullivan01/purity-ring",
   "license": "MIT",
   "devDependencies": {
