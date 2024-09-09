@@ -128,3 +128,12 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# data directory
+data/*
+
+# username data
+src/data/usernames.json
+
+# DS Store
+.DS_Store
